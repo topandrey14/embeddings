@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embeddings Generator</title>
+</head>
+<body>
+    <div id="result"></div>
+
+    <script>
+        async function fetchEmbeddings() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const url = urlParams.get('url');
+            if (url) {
+                const response = await fetch(`/generate_embeddings?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            } else {
+                document.getElementById('result').innerText = 'URL parameter is missing';
+            }
+        }
+
+        window.onload = fetchEmbeddings;
+    </script>
+</body>
+</html>
